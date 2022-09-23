@@ -1,5 +1,5 @@
 import math
-# Comment
+# Comment Edit
 string = input("Degrees, Minutes, Seconds: ")
 array = string.split(":")
 degrees = int(array[0]) + (int(array[1])/60) + (int(array[2])/3600)
