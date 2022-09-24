@@ -20,10 +20,12 @@ function PostForm() {
     .then(res => {
       const newres={...res.data}
       setResponse(newres)
+      setError({})
       console.log(newres)
     })
     .catch(error => {
       setError(error)
+      setResponse({})
       console.log(error)
     })
   }
