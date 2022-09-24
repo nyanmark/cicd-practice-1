@@ -19,6 +19,6 @@ from restapi import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/results', views.past_results),
-    path('api/conversion', views.conversion),
+    path('results', views.past_results),
+    path('conversion', views.conversion),
 ]
