@@ -1,6 +1,11 @@
+import React, { useState } from 'react';
+import PostForm from './components/PostForm';
+
 function App() {
   return (
-    <TodoList />
+    <div className='App'>
+      <PostForm />
+    </div>
   )
 }
 
