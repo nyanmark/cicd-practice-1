@@ -21,19 +21,19 @@ function PostForm() {
       const newres={...res.data}
       setResponse(newres)
       setError({})
-      console.log(newres)
+      // console.log(newres) commented for production
     })
     .catch(error => {
       setError(error)
       setResponse({})
-      console.log(error)
+      // console.log(error) commented for production
     })
   }
   function handle(e){
     const newdata={...data}
     newdata[e.target.id] = e.target.value
     setData(newdata)
-    console.log(newdata)
+    // console.log(newdata) commented for production
   }
   return (
     <div>
