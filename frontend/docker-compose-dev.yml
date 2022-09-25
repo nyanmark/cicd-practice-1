@@ -1,0 +1,10 @@
+version: "3" 
+services:
+  react: 
+    build: 
+      context: . 
+      args: 
+        - API_URL=${API_URL} 
+    container_name: react-dev
+    ports: 
+      - 8080:80

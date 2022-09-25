@@ -2,7 +2,7 @@ import React,{ useState } from 'react';
 import Axios from 'axios';
 
 function PostForm() {
-  const url = "http://127.0.0.1:8000/conversion"
+  const url = process.env.REACT_APP_API_URL + "conversion"
   const [data, setData] = useState({
     seconds: "",
     minutes: "",
@@ -21,19 +21,20 @@ function PostForm() {
       const newres={...res.data}
       setResponse(newres)
       setError({})
-      // console.log(newres) commented for production
+      //console.log(newres) //commented for production
     })
     .catch(error => {
       setError(error)
       setResponse({})
-      // console.log(error) commented for production
+      //console.log(error) //commented for production
     })
   }
   function handle(e){
     const newdata={...data}
     newdata[e.target.id] = e.target.value
     setData(newdata)
-    // console.log(newdata) commented for production
+    //console.log(newdata) //commented for production
+    //console.log(url)
   }
   return (
     <div>
