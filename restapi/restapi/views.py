@@ -1,6 +1,7 @@
 from http.client import SERVICE_UNAVAILABLE
 from unicodedata import decimal
 from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
 from .serializers import DegreesInputSerializer, PastDegreesToRadiansResultSerializer
 from .models import PastDegreesToRadiansResult
 from rest_framework.decorators import api_view
@@ -8,6 +9,7 @@ from rest_framework.response import Response
 from rest_framework import status
 import math
 
+@cache_page(30)
 def past_results(request):
     model_data = PastDegreesToRadiansResult.objects.all()
     serializer = PastDegreesToRadiansResultSerializer(model_data, many=True)

@@ -77,6 +77,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'restapi.wsgi.application'
 
+# Cache
+# https://docs.djangoproject.com/en/4.1/ref/settings/#caches
+
+CACHES = {
+    'default': {
+        'BACKEND': os.getenv('CACHE_ENGINE', 'django.core.cache.backends.locmem.LocMemCache'),
+        'LOCATION': os.getenv('CACHE_HOST'),
+    }
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
