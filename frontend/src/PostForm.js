@@ -1,8 +1,9 @@
 import React,{ useState } from 'react';
 import Axios from 'axios';
+import { getEnv } from "./env.js"
 
 function PostForm() {
-  const url = process.env.REACT_APP_API_URL + "conversion"
+  const url = getEnv()["API_URL"] + "conversion"
   const [data, setData] = useState({
     seconds: "",
     minutes: "",
@@ -34,7 +35,7 @@ function PostForm() {
     newdata[e.target.id] = e.target.value
     setData(newdata)
     //console.log(newdata) //commented for production
-    //console.log(url)
+    //console.log(url) //commented for production
   }
   return (
     <div>
