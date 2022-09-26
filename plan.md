@@ -1,3 +1,4 @@
+0. Deploy Hazelcast helm on cluster
 1. Reduce react production build
 2. Finalize dockerfile for django
 3. Create dev docker compose
