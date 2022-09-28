@@ -152,4 +152,4 @@ yarn-error.log*
 
 # Custom Addons
 .clues.txt
-kube_dev_service.yml
+kube_dev_*.yml
