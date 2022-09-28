@@ -1,0 +1,25 @@
+---
+# Source: hazelcast/templates/config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hazelcast-cluster-configuration-custom
+  namespace: cicd-practice-1
+  labels:
+    app.kubernetes.io/name: hazelcast
+    app.kubernetes.io/instance: "hazelcast-cluster"
+data:
+  hazelcast.yaml: |-
+    hazelcast:
+      jet:
+        enabled: ${hz.jet.enabled}
+      network:
+        memcache-protocol:
+          enabled: true
+        join:
+          kubernetes:
+            enabled: true
+            namespace: ${namespace}
+            service-name: ${serviceName}
+        rest-api:
+          enabled: true
