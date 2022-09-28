@@ -1,4 +1,3 @@
-2. Finalize dockerfile for django
 3. Create dev docker compose
 4. Test interoperability between apps
 5. Create docker building pipeline werf

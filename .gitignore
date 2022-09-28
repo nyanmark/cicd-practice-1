@@ -152,4 +152,5 @@ yarn-error.log*
 
 # Custom Addons
 .clues.txt
+.docker-compose.yml
 s_kube_*.yml
