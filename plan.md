@@ -1,4 +1,3 @@
-1. Reduce react production build
 2. Finalize dockerfile for django
 3. Create dev docker compose
 4. Test interoperability between apps
@@ -12,7 +11,6 @@
 12. Complete!!
 
 Werf - Assembly Pipeline
-Hazelcast - Memcached cache
 Linux - Assembly Host
 Logstach - Log System
 Lint - Code Analyzer
