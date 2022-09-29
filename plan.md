@@ -1,8 +1,7 @@
-3. Create dev docker compose
-4. Test interoperability between apps
-5. Create docker building pipeline werf
-6. Call werf using Jenkins/Github Actions
-7. Write helm chart
+4. Write deployment 
+5. Write helm template
+6. Create docker building pipeline werf
+7. Call werf using Jenkins/Github Actions
 8. Deploy to kubernetes using werf
 9. Configure logstach for namespace
 10. Write some documentation
