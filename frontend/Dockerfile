@@ -3,12 +3,11 @@ FROM node:16.17.0 as build
 WORKDIR /app
 COPY ./package.json . 
 COPY ./package-lock.json . 
-COPY ./.env .
 RUN npm install 
 
 COPY ./public ./public/ 
 COPY ./src ./src/ 
-COPY ./.env .
+RUN echo 'REACT_APP_API_URL="http://localhost:8000/"' >> .env
 RUN npm run build 
 
 FROM nginx:1.22-alpine

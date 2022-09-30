@@ -1,0 +1,14 @@
+configVersion: 1
+project: cicd-practice-1
+---
+image: frontend
+dockerfile: Dockerfile
+context: frontend
+---
+image: backend
+dockerfile: Dockerfile
+context: restapi
+---
+image: static
+dockerfile: Dockerfile
+context: static-host
