@@ -1,8 +1,8 @@
 4. Write deployment 
 5. Write helm template
-6. Create docker building pipeline werf
-7. Call werf using Jenkins/Github Actions
-8. Deploy to kubernetes using werf
+6. Create docker building pipeline Jenkins
+7. Call Jenkins
+8. Deploy to kubernetes using helm
 9. Configure logstach for namespace
 10. Write some documentation
 11. Do some code analysis
