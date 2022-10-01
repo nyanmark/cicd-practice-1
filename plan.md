@@ -1,4 +1,3 @@
-4. Write deployment 
 5. Write helm template
 6. Create docker building pipeline Jenkins
 7. Call Jenkins
@@ -8,7 +7,7 @@
 11. Do some code analysis
 12. Complete!!
 
-Werf - Assembly Pipeline
+Jenkins - Assembly Pipeline
 Linux - Assembly Host
 Logstach - Log System
 Lint - Code Analyzer
