@@ -3,12 +3,12 @@ project: cicd-practice-1
 ---
 image: frontend
 dockerfile: Dockerfile
-context: frontend
+context: frontend/
 ---
 image: backend
 dockerfile: Dockerfile
-context: restapi
+context: restapi/
 ---
 image: static
 dockerfile: Dockerfile
-context: static-host
+context: static-host/
