@@ -4,7 +4,7 @@ trigger:
      - main
 
 jobs:
-- job: Docker-Builds
+- job: Docker_Builds
   pool:
     name: default
   strategy:
