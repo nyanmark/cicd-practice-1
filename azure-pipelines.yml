@@ -4,11 +4,9 @@ trigger:
      - main
 
 jobs:
-- job: Docker_Builds
+- job: Build_Frontend
   pool:
     name: default
-  strategy:
-    maxParallel: '3'
   steps:
   - task: Docker@2
     displayName: Frontend Docker Build
@@ -20,6 +18,10 @@ jobs:
       tags: |
         latest
         $(Build.BuildId)
+- job: Build_Backend
+  pool:
+    name: default
+  steps:
   - task: Docker@2
     displayName: Backend Docker Build
     inputs:
@@ -30,6 +32,10 @@ jobs:
       tags: |
         latest
         $(Build.BuildId)
+- job: Build_Static
+  pool:
+    name: default
+  steps:
   - task: Docker@2
     displayName: Static Host Docker Build
     inputs:
