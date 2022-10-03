@@ -12,7 +12,6 @@ steps:
     repository: 'p1/frontend'
     command: 'buildAndPush'
     Dockerfile: 'frontend/Dockerfile'
-    buildContext: 'frontend'
     tags: |
       latest
       $(Build.BuildId)
@@ -23,7 +22,6 @@ steps:
     repository: 'p1/backend'
     command: 'buildAndPush'
     Dockerfile: 'restapi/Dockerfile'
-    buildContext: 'restapi'
     tags: |
       latest
       $(Build.BuildId)
@@ -34,7 +32,6 @@ steps:
     repository: 'p1/static'
     command: 'buildAndPush'
     Dockerfile: 'static-host/Dockerfile'
-    buildContext: 'static-host'
     tags: |
       latest
       $(Build.BuildId)
