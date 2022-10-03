@@ -8,6 +8,7 @@ pool:
 
 steps:
 - task: Docker@2
+  displayName: Frontend Docker Build
   inputs:
     containerRegistry: 'harbor-registry'
     repository: '/p1/frontend'
@@ -17,4 +18,25 @@ steps:
     tags: |
       latest
       $(Build.BuildId)
-
+- task: Docker@2
+  displayName: Backend Docker Build
+  inputs:
+    containerRegistry: 'harbor-registry'
+    repository: '/p1/backend'
+    command: 'buildAndPush'
+    Dockerfile: 'restapi/Dockerfile'
+    buildContext: 'restapi'
+    tags: |
+      latest
+      $(Build.BuildId)
+- task: Docker@2
+  displayName: Static Host Docker Build
+  inputs:
+    containerRegistry: 'harbor-registry'
+    repository: '/p1/static'
+    command: 'buildAndPush'
+    Dockerfile: 'static-host/Dockerfile'
+    buildContext: 'static-host'
+    tags: |
+      latest
+      $(Build.BuildId)
