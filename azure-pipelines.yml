@@ -9,7 +9,7 @@ steps:
   displayName: Frontend Docker Build
   inputs:
     containerRegistry: 'harbor-registry'
-    repository: '/p1/frontend'
+    repository: 'p1/frontend'
     command: 'buildAndPush'
     Dockerfile: 'frontend/Dockerfile'
     buildContext: 'frontend'
@@ -20,7 +20,7 @@ steps:
   displayName: Backend Docker Build
   inputs:
     containerRegistry: 'harbor-registry'
-    repository: '/p1/backend'
+    repository: 'p1/backend'
     command: 'buildAndPush'
     Dockerfile: 'restapi/Dockerfile'
     buildContext: 'restapi'
@@ -31,7 +31,7 @@ steps:
   displayName: Static Host Docker Build
   inputs:
     containerRegistry: 'harbor-registry'
-    repository: '/p1/static'
+    repository: 'p1/static'
     command: 'buildAndPush'
     Dockerfile: 'static-host/Dockerfile'
     buildContext: 'static-host'
