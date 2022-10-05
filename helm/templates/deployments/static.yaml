@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-static-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: static
+spec:
+  replicas: {{ .Values.static.min_replicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: static
+  template:
+    metadata:
+      labels:
+        app: static
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.global.pull_secret }}
+      containers:
+      - name: static
+        image: {{ .Values.static.image }}
+        imagePullPolicy: {{ .Values.static.pull_policy }}
+        ports:
+        - name: static
+          containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            cpu: {{ .Values.static.requests_cpu | quote }}
+            memory: {{ .Values.static.requests_mem | quote }}
+          limits:
+            cpu: {{ .Values.static.limits_cpu | quote }}
+            memory: {{ .Values.static.limits_mem | quote }}
+        readinessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10

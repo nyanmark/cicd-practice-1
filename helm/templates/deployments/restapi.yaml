@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-restapi-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: restapi
+spec:
+  replicas: {{ .Values.restapi.min_replicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: restapi
+  template:
+    metadata:
+      labels:
+        app: restapi
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.global.pull_secret }}
+      containers:
+      - name: restapi
+        image: {{ .Values.restapi.image }}
+        imagePullPolicy: {{ .Values.restapi.pull_policy }}
+        env:
+        - name: DJANGO_SECRET_KEY
+          valueFrom:
+            secretKeyRef: 
+              name: {{ .Release.Name }}-restapi-secret
+              key: django_secret_key
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef: 
+              name: {{ .Release.Name }}-restapi-secret
+              key: django_db_password
+        - name: DATABASE_ENGINE
+          value: {{ .Values.restapi.db_engine | quote }}
+        - name: DATABASE_NAME
+          value: {{ .Values.restapi.db_name | quote }}
+        - name: DATABASE_USERNAME
+          value: {{ .Values.restapi.db_username | quote }}
+        - name: DATABASE_HOST
+          value: {{ .Values.restapi.db_host | quote }}
+        - name: CACHE_ENGINE
+          value: {{ .Values.restapi.cache_engine | quote }}
+        - name: CACHE_HOST
+          value: {{ .Values.restapi.cache_host | quote }}
+        - name: DJANGO_STATIC_URL
+          value: "http{{- if .Values.tls.enabled -}}s{{- end -}}://{{ .Values.global.static_url }}/restapi/"
+        - name: DJANGO_LOGLEVEL
+          value: {{ .Values.global.log_level | upper | quote }}
+        ports:
+        - name: restapi
+          containerPort: 8000
+          protocol: TCP
+        resources:
+          requests:
+            cpu: {{ .Values.restapi.requests_cpu | quote }}
+            memory: {{ .Values.restapi.requests_mem | quote }}
+          limits:
+            cpu: {{ .Values.restapi.limits_cpu | quote }}
+            memory: {{ .Values.restapi.limits_mem | quote }}
+        readinessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10

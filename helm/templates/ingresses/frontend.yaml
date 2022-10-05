@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-frontend-ingress
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.global.ingress_class }}
+spec:
+  rules:
+  - host: {{ .Values.global.frontend_url }}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: {{ .Release.Name }}-frontend-service
+            port: 
+              number: 80
+{{- if .Values.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ .Values.global.frontend_url }}
+      secretName: {{ .Values.tls.frontend_cert }}
+{{- end -}}

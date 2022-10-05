@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-static-ingress
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.global.ingress_class }}
+spec:
+  rules:
+  - host: {{ .Values.global.static_url }}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: {{ .Release.Name }}-static-service
+            port: 
+              number: 80
+{{- if .Values.tls.enabled }}
+  tls:
+    - hosts:
+        - {{ .Values.global.static_url }}
+      secretName: {{ .Values.tls.static_cert }}
+{{- end -}}

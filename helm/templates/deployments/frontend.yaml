@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend-deployment
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: frontend
+spec:
+  replicas: {{ .Values.frontend.min_replicas }}
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      imagePullSecrets:
+      - name: {{ .Values.global.pull_secret }}
+      containers:
+      - name: frontend
+        image: {{ .Values.frontend.image }}
+        imagePullPolicy: {{ .Values.frontend.pull_policy }}
+        env:
+        - name: API_URL
+          value: "http{{- if .Values.tls.enabled -}}s{{- end -}}://{{ .Values.global.restapi_url }}/"
+        ports:
+        - name: frontend
+          containerPort: 80
+          protocol: TCP
+        resources:
+          requests:
+            cpu: {{ .Values.frontend.requests_cpu | quote }}
+            memory: {{ .Values.frontend.requests_mem | quote }}
+          limits:
+            cpu: {{ .Values.frontend.limits_cpu | quote }}
+            memory: {{ .Values.frontend.limits_mem | quote }}
