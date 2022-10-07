@@ -50,3 +50,17 @@ jobs:
       tags: |
         latest
         $(Build.BuildId)
+- job: Upload_Helm
+  pool:
+    name: default
+  steps:
+  - task: CmdLine@2
+    displayName: Add Helm Repository and Upload to repository
+    inputs:
+      script: |
+        helm repo add --username=$HELM_USERNAME --password=$HELM_PASSWORD helm-p1 $HELM_REPOSITORY
+        helm cm-push helm/ helm-p1
+    env:
+      HELM_USERNAME: $(helm-user)
+      HELM_PASSWORD: $(helm-pass)
+      HELM_REPOSITORY: $(helm-repo)
