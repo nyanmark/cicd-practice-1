@@ -64,26 +64,56 @@ jobs:
       HELM_USERNAME: $(helm-user)
       HELM_PASSWORD: $(helm-pass)
       HELM_REPOSITORY: $(helm-repo)
-# - job: Deployment
-#   pool:
-#     name: default
-#   dependsOn:
-#     - Build_Frontend
-#     - Build_Backend
-#     - Build_Static
-#     - Upload_Helm
-#   steps:
-#     - task: Kubernetes@1
-#       displayName: Log into Kubernetes Cluster
-#       inputs:
-#         connectionType: 'Kubernetes Service Connection'
-#         kubernetesServiceEndpoint: 'local-cluster-cicd-practice-1-1665145361156'
-#         command: 'login'
-#         versionOrLocation: 'location'
-#         specifyLocation: '/usr/local/bin/kubectl'
-#     - task: Kubernetes@1
-#       displayName: Log out of Kubernetes Cluster
-#       inputs:
-#         command: 'logout'
-#         versionOrLocation: 'location'
-#         specifyLocation: '/usr/local/bin/kubectl'
+- job: Deployment
+  pool:
+    name: default
+  dependsOn:
+    - Build_Frontend
+    - Build_Backend
+    - Build_Static
+    - Upload_Helm
+  steps:
+    - task: Kubernetes@1
+      displayName: Log into Kubernetes Cluster
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceEndpoint: 'local-cluster-cicd-practice-1-1665145361156'
+        command: 'login'
+        versionOrLocation: 'location'
+        specifyLocation: '/usr/local/bin/kubectl'
+    - task: CmdLine@2
+      displayName: Add Helm Repository and Update
+      inputs:
+        script: |
+          helm repo add --username=$HELM_USERNAME --password=$HELM_PASSWORD helm-p1 $HELM_REPOSITORY
+          helm repo update
+      env:
+        HELM_USERNAME: $(helm-user)
+        HELM_PASSWORD: $(helm-pass)
+        HELM_REPOSITORY: $(helm-repo)
+    - task: DownloadSecureFile@1
+      name: helmvalues
+      displayName: Download Helm Prod Values
+      inputs:
+        secureFile: 'prod_values.yaml'
+    - task: HelmDeploy@0
+      displayName: Update Helm Chart
+      inputs:
+        connectionType: 'Kubernetes Service Connection'
+        kubernetesServiceConnection: 'local-cluster-cicd-practice-1-1665145361156'
+        namespace: 'cicd-practice-1'
+        command: 'upgrade'
+        chartType: 'Name'
+        chartName: 'helm-p1/cicd-practice-1-helm'
+        releaseName: 'helm-p1'
+        valueFile: '$(helmvalues.secureFilePath)'
+        arguments: >
+          --set frontend.image=$(image-repo)frontend:$(Build.BuildId)
+          --set restapi.image=$(image-repo)backend:$(Build.BuildId)
+          --set static.image=$(image-repo)static:$(Build.BuildId)
+    - task: Kubernetes@1
+      displayName: Log out of Kubernetes Cluster
+      inputs:
+        command: 'logout'
+        versionOrLocation: 'location'
+        specifyLocation: '/usr/local/bin/kubectl'
