@@ -64,3 +64,26 @@ jobs:
       HELM_USERNAME: $(helm-user)
       HELM_PASSWORD: $(helm-pass)
       HELM_REPOSITORY: $(helm-repo)
+# - job: Deployment
+#   pool:
+#     name: default
+#   dependsOn:
+#     - Build_Frontend
+#     - Build_Backend
+#     - Build_Static
+#     - Upload_Helm
+#   steps:
+#     - task: Kubernetes@1
+#       displayName: Log into Kubernetes Cluster
+#       inputs:
+#         connectionType: 'Kubernetes Service Connection'
+#         kubernetesServiceEndpoint: 'local-cluster-cicd-practice-1-1665145361156'
+#         command: 'login'
+#         versionOrLocation: 'location'
+#         specifyLocation: '/usr/local/bin/kubectl'
+#     - task: Kubernetes@1
+#       displayName: Log out of Kubernetes Cluster
+#       inputs:
+#         command: 'logout'
+#         versionOrLocation: 'location'
+#         specifyLocation: '/usr/local/bin/kubectl'
